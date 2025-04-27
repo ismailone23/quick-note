@@ -1,0 +1,25 @@
+{
+  "extends": "@workspace/typescript-config/nextjs.json",
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@workspace/auth": ["../../packages/auth/src"], // Adjust to your monorepo structure
+      "@workspace/db": ["../../packages/db/src"],
+      "next-auth": ["node_modules/next-auth"] // Ensures consistent resolution
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
+    "next.config.mjs",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules"]
+}

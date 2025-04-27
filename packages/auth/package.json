@@ -1,0 +1,29 @@
+{
+  "name": "@workspace/auth",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "exports": {
+    "react-server": "./src/index.rsc.ts",
+    "default": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.13.14",
+    "@types/react": "^19.0.12",
+    "@workspace/eslint-config": "workspace:*",
+    "@workspace/typescript-config": "workspace:*",
+    "next": "^15.2.4",
+    "typescript": "5.8.2"
+  },
+  "dependencies": {
+    "@auth/core": "^0.38.0",
+    "@auth/drizzle-adapter": "^1.8.0",
+    "@workspace/db": "workspace:*",
+    "next-auth": "5.0.0-beta.25",
+    "react": "^19.1.0"
+  }
+}
