@@ -7,78 +7,48 @@ import {
   users,
   verificationTokens,
 } from "@workspace/db/schema";
-import type {
-  DefaultSession,
-  NextAuthConfig,
-  Session as NextAuthSession,
-} from "next-auth";
-import type { Adapter } from "next-auth/adapters";
-import type { JWT } from "next-auth/jwt";
-import type { OAuthConfig } from "next-auth/providers";
-import Google from "next-auth/providers/google";
-export type { Adapter, JWT, OAuthConfig };
+import { type DefaultSession, type NextAuthConfig } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
 
 declare module "next-auth" {
-  interface Session {
+  interface Session extends DefaultSession {
     user: {
       id: string;
-      email: string;
-      lastWorkspaceId?: string | null;
     } & DefaultSession["user"];
   }
 }
 
-const adapter = DrizzleAdapter(db, {
-  usersTable: users,
-  accountsTable: accounts,
-  sessionsTable: sessions,
-  authenticatorsTable: authenticators,
-  verificationTokensTable: verificationTokens,
-});
+const adapter =
+  process.env.RUNTIME === "edge"
+    ? undefined
+    : DrizzleAdapter(db, {
+        usersTable: users,
+        accountsTable: accounts,
+        sessionsTable: sessions,
+        verificationTokensTable: verificationTokens,
+        authenticatorsTable: authenticators,
+      });
 
-export const isSecureContext = process.env.NODE_ENV !== "development";
-
-export const authConfig = {
-  adapter,
+export const authConfig: NextAuthConfig = {
+  trustHost: true,
+  providers: [GoogleProvider({ allowDangerousEmailAccountLinking: true })],
   secret: process.env.AUTH_SECRET,
-  providers: [Google({ allowDangerousEmailAccountLinking: true })],
+  adapter,
+  session: {
+    strategy: "jwt",
+  },
   callbacks: {
-    session: (opts) => {
-      if (!("user" in opts))
-        throw new Error("unreachable with session strategy");
-
-      return {
-        ...opts.session,
-        user: {
-          ...opts.session.user,
-          id: opts.user.id,
-        },
-      };
-    },
+    session: ({ session, token }) => ({
+      ...session,
+      user: {
+        ...session.user,
+        id: token.sub,
+      },
+    }),
   },
   pages: {
     signIn: "/login",
     verifyRequest: "/login",
     error: "/login",
   },
-} satisfies NextAuthConfig;
-
-export const validateToken = async (
-  token: string
-): Promise<NextAuthSession | null> => {
-  const sessionToken = token.slice("Bearer ".length);
-  const session = await adapter.getSessionAndUser?.(sessionToken);
-  return session
-    ? {
-        user: {
-          ...session.user,
-        },
-        expires: session.session.expires.toISOString(),
-      }
-    : null;
-};
-
-export const invalidateSessionToken = async (token: string) => {
-  const sessionToken = token.slice("Bearer ".length);
-  await adapter.deleteSession?.(sessionToken);
 };

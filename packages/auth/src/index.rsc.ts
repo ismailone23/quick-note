@@ -9,7 +9,7 @@ export type { Session } from "next-auth";
 const {
   handlers: defaultHandlers,
   auth: defaultAuth,
-  signIn,
+  signIn: defaultSignIn,
   signOut,
 } = NextAuth(authConfig);
 
@@ -19,11 +19,6 @@ const {
  */
 const auth: NextAuthResult["auth"] = cache(defaultAuth);
 const handlers: NextAuthResult["handlers"] = defaultHandlers;
+const signIn: NextAuthResult["signIn"] = defaultSignIn;
 
 export { auth, handlers, signIn, signOut };
-
-export {
-  invalidateSessionToken,
-  isSecureContext,
-  validateToken,
-} from "./config";

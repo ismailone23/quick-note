@@ -1,7 +1,10 @@
-import React from 'react'
+"use client";
+import { useSession } from "next-auth/react";
+import React from "react";
 
 export default function Page() {
-  return (
-    <div>Page</div>
-  )
+  const { data, status } = useSession();
+  console.log({ data });
+
+  return status != "loading" ? <div>{data?.user.email}</div> : <p>loading</p>;
 }
