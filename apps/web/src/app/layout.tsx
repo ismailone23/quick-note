@@ -4,15 +4,16 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "sonner";
 import AuthProvider from "@/providers/auth-providers";
+import { Metadata } from "next";
 
-// export const metadata: Metadata = {
-//   metadataBase: new URL(
-//     process.env.VERCEL_ENV === "production"
-//       ? "https://alochona-v2.io"
-//       : "http://localhost:3000"
-//   ),
-//   title: "alochona-v2",
-// };
+export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.VERCEL_ENV === "production"
+      ? "https://quick-note.io"
+      : "http://localhost:3000"
+  ),
+  title: "quick-note",
+};
 
 export default function RootLayout({
   children,
