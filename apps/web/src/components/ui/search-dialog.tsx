@@ -20,7 +20,7 @@ export default function SearchDialog({
   return (
     <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
       <DialogTrigger asChild>
-        <SidebarMenuButton className="flex items-center gap-2 hover:bg-gray-300 transition-all">
+        <SidebarMenuButton className="flex sm:cursor-pointer items-center gap-2 hover:bg-zinc-300 rounded-sm dark:hover:bg-zinc-800 transition-all">
           <Search className="w-4 h-4" />
           <span>Search</span>
         </SidebarMenuButton>

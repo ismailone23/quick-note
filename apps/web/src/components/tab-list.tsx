@@ -32,7 +32,7 @@ export default function TabList() {
           <TabsTrigger
             key={i}
             value={t.title}
-            className={`w-full justify-start gap-2 px-4 py-1 text-sm ${t.type === "u" ? "font-medium" : "font-normal"}  rounded-sm
+            className={`w-full sm:cursor-pointer justify-start gap-2 px-4 py-1 text-sm ${t.type === "u" ? "font-medium" : "font-normal"}  rounded-sm
               data-[state=active]:bg-gray-200 data-[state=active]:border-none border-none data-[state=active]:shadow-none data-[state=active]:font-medium
               h-auto`}
           >

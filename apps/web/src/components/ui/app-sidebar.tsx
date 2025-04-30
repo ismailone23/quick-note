@@ -1,10 +1,11 @@
 "use client";
-import { ChevronsLeft, Home, Inbox } from "lucide-react";
+import { ChevronsLeft, Home } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -20,32 +21,18 @@ import SettingDialogue from "./setting-dialogue";
 import SearchDialog from "./search-dialog";
 import { usePathname } from "next/navigation";
 
-const generalItems = [
-  {
-    title: "Home",
-    url: "/workspace",
-    icon: Home,
-  },
-  {
-    title: "Inbox",
-    url: "/inbox",
-    icon: Inbox,
-  },
-];
-
 export function AppSidebar() {
   const { data } = useSession();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const { toggleSidebar } = useSidebar();
   const pathname = usePathname();
-  console.log(pathname);
 
   return (
     <Sidebar>
       <SidebarContent className="dark:bg-neutral-900">
         <SidebarGroup>
-          <SidebarMenu className="w-full py-1 hover:bg-gray-300 px-2 rounded-sm">
+          <SidebarMenu className="w-full py-1 hover:bg-zinc-300 dark:hover:bg-zinc-800 rounded-sm px-2">
             <div className="w-full flex items-center space-x-2 justify-between">
               <div className="w-full flex items-center space-x-2">
                 <Avatar>
@@ -68,25 +55,30 @@ export function AppSidebar() {
           </SidebarMenu>
           <SidebarGroupContent>
             <SidebarMenu>
-              {generalItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    asChild
-                    className={`hover:bg-gray-300 ${pathname === item.url && "bg-gray-300"} transition-all translate-0.5`}
-                  >
-                    <Link href={item.url} className="flex items-center gap-2">
-                      <item.icon className="w-4 h-4" />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  className={`hover:bg-zinc-300 dark:hover:bg-zinc-800 rounded-sm ${pathname === "/workspace" && "bg-zinc-300 dark:bg-zinc-800"} transition-all translate-0.5`}
+                >
+                  <Link href={"/workspace"} className="flex items-center gap-2">
+                    <Home className="w-4 h-4" />
+                    <span>Home</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
               <SidebarMenuItem>
                 <SearchDialog
                   isSearchOpen={isSearchOpen}
                   setIsSearchOpen={setIsSearchOpen}
                 />
               </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarGroupLabel>Private</SidebarGroupLabel>
+            <SidebarMenu>
               <SidebarMenuItem>
                 <SettingDialogue
                   isSettingsOpen={isSettingsOpen}
