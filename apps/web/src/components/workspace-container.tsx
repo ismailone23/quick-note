@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 import { useSidebar } from "./ui/sidebar";
 import { ChevronsRight } from "lucide-react";
 
-export default function HomeChildren({
+export default function WorkspaceContainer({
   children,
 }: {
   children: React.ReactNode;

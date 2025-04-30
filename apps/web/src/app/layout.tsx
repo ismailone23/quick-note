@@ -5,6 +5,13 @@ import { SessionProvider } from "next-auth/react";
 import { Toaster } from "sonner";
 import AuthProvider from "@/providers/auth-providers";
 import { Metadata } from "next";
+import { Roboto } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-providers";
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "500", "700", "900"],
+  variable: "--font-roboto",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -21,16 +28,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={`${roboto.variable}`} suppressHydrationWarning>
       <body>
-        <AuthProvider>
-          <SessionProvider>
-            <TRPCReactProvider>
-              <Toaster />
-              {children}
-            </TRPCReactProvider>
-          </SessionProvider>
-        </AuthProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AuthProvider>
+            <SessionProvider>
+              <TRPCReactProvider>
+                <Toaster />
+                {children}
+              </TRPCReactProvider>
+            </SessionProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -6,10 +6,10 @@ export default auth(async (req) => {
 
   if (req.auth && pathname.startsWith("/login")) {
     const callbackUrl = req.nextUrl.searchParams.get("callbackUrl");
-    return NextResponse.redirect(new URL(callbackUrl ?? "/home", req.url));
+    return NextResponse.redirect(new URL(callbackUrl ?? "/workspace", req.url));
   }
   if (req.auth && pathname === "/") {
-    return NextResponse.redirect(new URL("/home", req.url));
+    return NextResponse.redirect(new URL("/workspace", req.url));
   }
   if (!req.auth && !pathname.startsWith("/login")) {
     const url = new URL("/login", req.url);

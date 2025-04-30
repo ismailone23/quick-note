@@ -18,11 +18,12 @@ import { useState } from "react";
 import { Button } from "./button";
 import SettingDialogue from "./setting-dialogue";
 import SearchDialog from "./search-dialog";
+import { usePathname } from "next/navigation";
 
 const generalItems = [
   {
     title: "Home",
-    url: "/home",
+    url: "/workspace",
     icon: Home,
   },
   {
@@ -37,12 +38,14 @@ export function AppSidebar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const { toggleSidebar } = useSidebar();
+  const pathname = usePathname();
+  console.log(pathname);
 
   return (
     <Sidebar>
-      <SidebarContent>
+      <SidebarContent className="dark:bg-neutral-900">
         <SidebarGroup>
-          <SidebarMenu className="w-full py-1 hover:bg-gray-100 px-2 rounded-sm">
+          <SidebarMenu className="w-full py-1 hover:bg-gray-300 px-2 rounded-sm">
             <div className="w-full flex items-center space-x-2 justify-between">
               <div className="w-full flex items-center space-x-2">
                 <Avatar>
@@ -67,7 +70,10 @@ export function AppSidebar() {
             <SidebarMenu>
               {generalItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton
+                    asChild
+                    className={`hover:bg-gray-300 ${pathname === item.url && "bg-gray-300"} transition-all translate-0.5`}
+                  >
                     <Link href={item.url} className="flex items-center gap-2">
                       <item.icon className="w-4 h-4" />
                       <span>{item.title}</span>
