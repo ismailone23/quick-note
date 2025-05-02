@@ -7,6 +7,7 @@ import AuthProvider from "@/providers/auth-providers";
 import { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-providers";
+import NoteProvider from "@/providers/note-providers";
 const roboto = Roboto({
   subsets: ["latin"],
   weight: ["100", "300", "400", "500", "700", "900"],
@@ -39,8 +40,10 @@ export default function RootLayout({
           <AuthProvider>
             <SessionProvider>
               <TRPCReactProvider>
-                <Toaster />
-                {children}
+                <NoteProvider>
+                  <Toaster />
+                  {children}
+                </NoteProvider>
               </TRPCReactProvider>
             </SessionProvider>
           </AuthProvider>

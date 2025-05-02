@@ -1,6 +1,6 @@
 {
-  "id": "366d3136-5828-4304-9983-11265e08261a",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "199775dc-536d-4419-a2ec-7cb4ed68c650",
+  "prevId": "366d3136-5828-4304-9983-11265e08261a",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -402,7 +402,7 @@
           "name": "note_title",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "note_description": {
           "name": "note_description",

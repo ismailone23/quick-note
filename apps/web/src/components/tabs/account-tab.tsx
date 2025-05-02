@@ -55,15 +55,20 @@ export default function AccountTab() {
       <div className="flex w-full gap-2 flex-col">
         <div className="flex gap-4">
           <div onClick={handleAvatarClick} className="cursor-pointer">
-            <Avatar className="w-16 h-16">
-              {preview ? (
+            {preview ? (
+              <Avatar className="w-16 h-16">
                 <AvatarImage src={preview} alt="Profile" />
-              ) : (
                 <AvatarFallback>
                   {data?.user.name?.charAt(0).toUpperCase()}
                 </AvatarFallback>
-              )}
-            </Avatar>
+              </Avatar>
+            ) : (
+              <Avatar className="w-16 h-16">
+                <AvatarFallback>
+                  {data?.user.name?.charAt(0).toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+            )}
           </div>
 
           <Input
